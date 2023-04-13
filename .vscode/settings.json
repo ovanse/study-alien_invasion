@@ -1,5 +1,12 @@
 {
-    "cSpell.words": ["blit", "blitme", "midbottom", "pygame"],
+    "cSpell.words": [
+        "blit",
+        "blitme",
+        "KEYDOWN",
+        "KEYUP",
+        "midbottom",
+        "pygame"
+    ],
     "[python]": {
         "editor.defaultFormatter": "ms-python.autopep8"
     },
