@@ -1,0 +1,15 @@
+{
+    "cSpell.words": [
+        "blit",
+        "blitme",
+        "FULLSCREEN",
+        "KEYDOWN",
+        "KEYUP",
+        "midbottom",
+        "pygame"
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "python.formatting.provider": "none"
+}
