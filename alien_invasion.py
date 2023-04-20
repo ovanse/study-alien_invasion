@@ -77,7 +77,10 @@ class AlienInvasion:
             self.bullets.add(new_bullet)
             
     def _update_aliens(self):
-        """Обновляет позиции всех пришельцев во флоте."""
+        """
+        Проверяет достиг ли флот края экрана.
+            с последующим обновлением всех пришельцев во флоте."""
+        self._check_fleet_edges()
         self.aliens.update()
             
     def _update_bullets(self):
@@ -89,6 +92,19 @@ class AlienInvasion:
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
+                
+        self._check_bullet_alien_collisions()
+            
+    def _check_bullet_alien_collisions(self):
+        """Обработка коллизий снарядов с пришельцами."""
+        # Удаление снарядов и пришельцев, участвующих в коллизиях.
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+        
+        if not self.aliens:
+            # Уничтожение существующих снарядов и создание нового флота.
+            self.bullets.empty()
+            self._create_fleet()
+
                 
     def _create_fleet(self):
         """Создает флот пришельцев."""
@@ -119,7 +135,18 @@ class AlienInvasion:
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)  
         
-    
+    def _check_fleet_edges(self):
+        """Реагирует на достижение пришельцем края экрана."""
+        for alien in self.aliens.sprites():
+            if alien.check_edges():
+                self._change_fleet_direction()
+                break
+            
+    def _change_fleet_direction(self):
+        """Опускает весь флот и меняет направление флота."""
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.settings.fleet_drop_speed
+        self.settings.fleet_direction *= -1
     
     def _update_screen(self):
         """Обновляет изображения на экране и отображает новый экран."""
